@@ -4,19 +4,20 @@ import { MapService } from '../map.service';
 import { GeoJson } from '../models/map';
 
 @Component({
-  selector: 'app-map-component',
-  templateUrl: './map-component.component.html',
-  styleUrls: ['./map-component.component.css'],
+  selector: 'app-map',
+  templateUrl: './map.component.html',
+  styleUrls: ['./map.component.css'],
 })
-export class MapComponentComponent implements OnInit {
+export class MapComponent implements OnInit {
   map: mapboxgl.Map;
   lat = 37.75;
   lng = -122.41;
 
-  constructor(private mapService:MapService) {}
+  constructor(private mapService: MapService) {}
 
   ngOnInit(): void {
     this.initializeMap();
+    this.mapService.getMarkers();
   }
 
   private initializeMap() {
@@ -31,7 +32,6 @@ export class MapComponentComponent implements OnInit {
         });
       });
     }
-
   }
 
   buildMap() {
@@ -39,7 +39,7 @@ export class MapComponentComponent implements OnInit {
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v11',
       zoom: 13,
-      center: [this.lng, this.lat]
+      center: [this.lng, this.lat],
     });
     /// Add map controls
     this.map.addControl(new mapboxgl.NavigationControl());
@@ -47,7 +47,7 @@ export class MapComponentComponent implements OnInit {
 
   flyTo(data: GeoJson) {
     this.map.flyTo({
-      center: data.geometry.coordinates
-    })
+      center: data.geometry.coordinates,
+    });
   }
 }

@@ -1,24 +1,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const { Pool } = require('pg');
 
+const locationRoutes = require("./routes/locations");
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
-
-const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'gis_db',
-  password: 'postgres',
-  port: 5432
-});
-
-
-pool.query('SELECT * FROM categories', (err, res) => {
-  console.log(err, res);
-  pool.end();
-});
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -32,5 +18,8 @@ app.use((req, res, next) => {
   );
   next();
 });
+
+// forward only requests starting with first argument to the locationRoutes
+app.use("/api/locations", locationRoutes);
 
 module.exports = app
