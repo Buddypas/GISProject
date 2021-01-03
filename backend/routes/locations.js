@@ -14,14 +14,15 @@ const pool = new Pool({
  * Get all locations
  */
 router.get("", (req, res, next) => {
-  let result;
-  pool.query("SELECT * FROM locations").then((res) => {
-    result = res;
-  });
-
-  res.status(200).json({
-    message: "success",
-    result:result
+  console.log("get called");
+  let results;
+  pool.query("SELECT * FROM locations").then((result) => {
+    results = result.rows;
+    console.log(results);
+    res.status(200).json({
+      message: "success",
+      results: results,
+    });
   });
 });
 

@@ -1,6 +1,11 @@
 <mat-card>
   <mat-card-title>Locations</mat-card-title>
   <mat-card-content>
-    <div></div>
+    <div *ngFor="let location of locations">
+      <p>{{ location.name }}</p>
+      <p>{{ location.latitude }}</p>
+      <p>{{ location.longitude }}</p>
+      <p>{{ location.description }}</p>
+    </div>
   </mat-card-content>
 </mat-card>
