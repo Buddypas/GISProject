@@ -52,6 +52,8 @@ export class MapComponent implements OnInit {
       console.log(
         'longitude:' + coordinates[0] + ', latitude: ' + coordinates[1]
       );
+      this.lng = coordinates[0];
+      this.lat = coordinates[1];
 
       const marker = new mapboxgl.Marker()
         .setLngLat([coordinates[0], coordinates[1]])
@@ -68,6 +70,6 @@ export class MapComponent implements OnInit {
   }
 
   openBottomSheet(): void {
-    this._bottomSheet.open(AddLocationSheetComponent);
+    this._bottomSheet.open(AddLocationSheetComponent,{data: {lng:this.lng,lat:this.lat}});
   }
 }
