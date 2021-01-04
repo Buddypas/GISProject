@@ -27,18 +27,17 @@ export class MapService {
         map((data) => {
           return data.results.map((location) => {
             const newName = location.name.trim();
-            let newDesc:string | null;
+            let newDesc: string | null;
             if (location.description != null)
               newDesc = location.description.trim();
-            else
-              newDesc = null;
+            else newDesc = null;
 
             return new Location(
-              location.id,
               location.longitude,
               location.latitude,
               newName,
-              newDesc
+              newDesc,
+              location.id
             );
           });
         })

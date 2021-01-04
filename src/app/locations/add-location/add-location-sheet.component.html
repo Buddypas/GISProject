@@ -1,21 +1,26 @@
 <div>
-  <a href="https://keep.google.com/" mat-list-item (click)="openLink($event)">
-    <span mat-line>Google Keep</span>
-    <span mat-line>Add to a note</span>
-  </a>
-
-  <a href="https://docs.google.com/" mat-list-item (click)="openLink($event)">
-    <span mat-line>Google Docs</span>
-    <span mat-line>Embed in a document</span>
-  </a>
-
-  <a href="https://plus.google.com/" mat-list-item (click)="openLink($event)">
-    <span mat-line>Google Plus</span>
-    <span mat-line>Share with your friends</span>
-  </a>
-
-  <a href="https://hangouts.google.com/" mat-list-item (click)="openLink($event)">
-    <span mat-line>Google Hangouts</span>
-    <span mat-line>Show to your coworkers</span>
-  </a>
+  <form (ngSubmit)="onSubmit()" #locationForm="ngForm" id="locationForm">
+    <div class="form-container">
+      <mat-form-field appearance="outline">
+        <mat-label>Name: </mat-label>
+        <input matInput type="text" required id="name" name="name" maxlength="50"
+        [(ngModel)]="location.name">
+      </mat-form-field>
+      <!-- <br> -->
+      <mat-form-field appearance="outline">
+        <mat-label>Description: </mat-label>
+        <input matInput type="text" id="description" name="description" minlength="3" maxlength="500"
+        [(ngModel)]="location.description">
+      </mat-form-field>
+      <!-- <br> -->
+      <mat-form-field appearance="outline">
+        <mat-label>Category:</mat-label>
+        <mat-select name="category" [(ngModel)]="location.categoryId" required>
+          <mat-option *ngFor="let category of categories" [value]="category.id">{{category.type}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button type="submit" mat-raised-button [disabled]="!locationForm.valid">Add location</button>
+      <!-- add [disabled]="!f.valid" -->
+    </div>
+  </form>
 </div>
