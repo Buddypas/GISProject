@@ -1,11 +1,19 @@
-<mat-card>
-  <mat-card-title>Locations</mat-card-title>
+<mat-card style="margin-top: 5%;margin-right: 5%;">
+  <mat-card-title>
+    <h1>Locations</h1>
+  </mat-card-title>
+
   <mat-card-content>
-    <div *ngFor="let location of locations">
-      <p>{{ location.name }}</p>
-      <p>{{ location.latitude }}</p>
-      <p>{{ location.longitude }}</p>
-      <p>{{ location.description }}</p>
-    </div>
+    <cdk-virtual-scroll-viewport itemSize="50" class="locations-scrollable-container">
+      <div *cdkVirtualFor="let location of locations">
+        <h2>{{ location.name }}</h2>
+        <p>
+          <span>Longitude: {{ location.longitude }} </span>
+          <span>Latitude: {{ location.latitude }}</span>
+        </p>
+        <p>{{ location.description }}</p>
+        <mat-divider></mat-divider>
+      </div>
+    </cdk-virtual-scroll-viewport>
   </mat-card-content>
 </mat-card>

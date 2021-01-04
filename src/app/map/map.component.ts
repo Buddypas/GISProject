@@ -46,11 +46,16 @@ export class MapComponent implements OnInit {
 
     //// Add Marker on Click
     this.map.on('click', (event) => {
-      const coordinates = [event.lngLat.lng, event.lngLat.lat]
-      console.log("longitude:" +  coordinates[0] + ", latitude: " + coordinates[1]);
-      // const newMarker   = new GeoJson(coordinates, { message: this.message })
-      // this.mapService.createMarker(newMarker)
-    })
+      const coordinates = [event.lngLat.lng, event.lngLat.lat];
+      console.log(
+        'longitude:' + coordinates[0] + ', latitude: ' + coordinates[1]
+      );
+
+      const marker = new mapboxgl.Marker()
+        .setLngLat([coordinates[0], coordinates[1]])
+        .addTo(this.map);
+
+    });
   }
 
   flyTo(data: GeoJson) {
