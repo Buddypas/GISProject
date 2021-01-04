@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import mapboxgl from 'mapbox-gl';
-import { AddLocationSheet } from '../locations/add-location/add-location.component';
+import { AddLocationSheetComponent } from '../locations/add-location/add-location-sheet.component';
 import { MapService } from '../map.service';
 import { GeoJson } from '../models/map';
 
@@ -68,6 +68,6 @@ export class MapComponent implements OnInit {
   }
 
   openBottomSheet(): void {
-    this._bottomSheet.open(AddLocationSheet);
+    this._bottomSheet.open(AddLocationSheetComponent);
   }
 }

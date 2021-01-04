@@ -9,18 +9,23 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
-import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
-
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import { MapComponent } from './map/map.component';
 import { LocationsComponent } from './locations/locations.component';
 import { LocationListComponent } from './locations/location-list/location-list.component';
-import { AddLocationComponent } from './locations/add-location/add-location.component';
+import { AddLocationSheetComponent } from './locations/add-location/add-location-sheet.component';
 
 @NgModule({
-  declarations: [AppComponent, MapComponent, LocationsComponent, LocationListComponent, AddLocationComponent],
+  declarations: [
+    AppComponent,
+    MapComponent,
+    LocationsComponent,
+    LocationListComponent,
+    AddLocationSheetComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -30,7 +35,7 @@ import { AddLocationComponent } from './locations/add-location/add-location.comp
     MatDividerModule,
     MatListModule,
     ScrollingModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
