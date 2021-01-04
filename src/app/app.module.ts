@@ -17,9 +17,10 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MapComponent } from './map/map.component';
 import { LocationsComponent } from './locations/locations.component';
 import { LocationListComponent } from './locations/location-list/location-list.component';
+import { AddLocationComponent } from './locations/add-location/add-location.component';
 
 @NgModule({
-  declarations: [AppComponent, MapComponent, LocationsComponent, LocationListComponent],
+  declarations: [AppComponent, MapComponent, LocationsComponent, LocationListComponent, AddLocationComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

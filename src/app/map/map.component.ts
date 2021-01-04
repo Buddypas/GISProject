@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import mapboxgl from 'mapbox-gl';
+import { AddLocationSheet } from '../locations/add-location/add-location.component';
 import { MapService } from '../map.service';
 import { GeoJson } from '../models/map';
 
@@ -13,7 +15,7 @@ export class MapComponent implements OnInit {
   lat = 37.75;
   lng = -122.41;
 
-  constructor(private mapService: MapService) {}
+  constructor(private mapService: MapService, private _bottomSheet: MatBottomSheet) {}
 
   ngOnInit(): void {
     this.initializeMap();
@@ -54,6 +56,7 @@ export class MapComponent implements OnInit {
       const marker = new mapboxgl.Marker()
         .setLngLat([coordinates[0], coordinates[1]])
         .addTo(this.map);
+      this.openBottomSheet();
 
     });
   }
@@ -62,5 +65,9 @@ export class MapComponent implements OnInit {
     this.map.flyTo({
       center: data.geometry.coordinates,
     });
+  }
+
+  openBottomSheet(): void {
+    this._bottomSheet.open(AddLocationSheet);
   }
 }
