@@ -1,24 +1,34 @@
 <div>
   <form (ngSubmit)="onSubmit()" #locationForm="ngForm" id="locationForm">
     <div class="form-container">
-      <mat-form-field appearance="outline">
+      <mat-form-field class="location-field-small" appearance="outline">
+        <mat-label>Longitude: </mat-label>
+        <input matInput type="text" disabled id="longitude" name="longitude" [value]="location.longitude">
+      </mat-form-field>
+      <mat-form-field class="location-field-small" appearance="outline">
+        <mat-label>Latitude: </mat-label>
+        <input matInput type="text" disabled id="latitude" name="latitude" [value]="location.latitude">
+      </mat-form-field>
+      <br>
+      <mat-form-field class="location-field-large" appearance="outline">
         <mat-label>Name: </mat-label>
         <input matInput type="text" required id="name" name="name" maxlength="50"
         [(ngModel)]="location.name">
       </mat-form-field>
-      <!-- <br> -->
-      <mat-form-field appearance="outline">
+      <br>
+      <mat-form-field class="location-field-large" appearance="outline">
         <mat-label>Description: </mat-label>
         <input matInput type="text" id="description" name="description" minlength="3" maxlength="500"
         [(ngModel)]="location.description">
       </mat-form-field>
-      <!-- <br> -->
-      <mat-form-field appearance="outline">
+      <br>
+      <mat-form-field class="location-field-large" appearance="outline">
         <mat-label>Category:</mat-label>
         <mat-select name="category" [(ngModel)]="location.categoryId" required>
           <mat-option *ngFor="let category of categories" [value]="category.id">{{category.type}}</mat-option>
         </mat-select>
       </mat-form-field>
+      <br>
       <button type="submit" mat-raised-button [disabled]="!locationForm.valid">Add location</button>
       <!-- add [disabled]="!f.valid" -->
     </div>

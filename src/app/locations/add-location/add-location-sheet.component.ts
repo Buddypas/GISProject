@@ -9,7 +9,7 @@ import { Location } from '../../models/location.model';
   styleUrls: ['./add-location-sheet.component.css'],
 })
 export class AddLocationSheetComponent implements OnInit {
-  location = new Location(-1, -1, '','');
+  location = new Location(this.data.lng, this.data.lat, '','');
   categories = [
     { id: 1, type: 'bar' },
     { id: 2, type: 'hotel' },
@@ -20,7 +20,7 @@ export class AddLocationSheetComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.data.lng + ',' + this.data.lat);
+
   }
 
   onSubmit() {
