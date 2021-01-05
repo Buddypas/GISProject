@@ -33,5 +33,6 @@ export class AddLocationSheetComponent implements OnInit {
 
   onSubmit() {
     console.log(this.location);
+    this.mapService.addLocation(this.location);
   }
 }

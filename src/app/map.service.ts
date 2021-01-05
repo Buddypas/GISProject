@@ -6,7 +6,6 @@ import mapboxgl from 'mapbox-gl';
 import { environment } from 'src/environments/environment';
 import { Subject } from 'rxjs';
 import { Location } from './models/location.model';
-import { stringify } from '@angular/compiler/src/util';
 import { Category } from './models/category.model';
 
 @Injectable({
@@ -72,10 +71,15 @@ export class MapService {
       )
       .subscribe((locationsData) => {
         console.log(locationsData);
-        // console.log(locationsData["message"]);
-        // console.log(locationsData["results"]);
         this.currentLocations = locationsData;
         this.locationsUpdated.next(true);
       });
+  }
+
+  addLocation(location:Location) {
+    this.http.post('http://localhost:3000/api/locations/add',location)
+    .subscribe(response => {
+      console.log("response from map service: " + response);
+    })
   }
 }

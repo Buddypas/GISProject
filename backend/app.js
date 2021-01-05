@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const locationRoutes = require("./routes/locations");
 const categoryRoutes = require("./routes/categories");
 const app = express();
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 
