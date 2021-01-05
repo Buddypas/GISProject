@@ -28,7 +28,8 @@ export class AddLocationSheetComponent implements OnInit {
         // console.log(this.categories);
       }
     })
-    this.mapService.getLocationCategories();
+    if(this.mapService.categories.length > 0) this.categories = this.mapService.categories;
+    else this.mapService.getLocationCategories();
   }
 
   onSubmit() {
