@@ -7,15 +7,43 @@ import { environment } from 'src/environments/environment';
 import { Subject } from 'rxjs';
 import { Location } from './models/location.model';
 import { stringify } from '@angular/compiler/src/util';
+import { Category } from './models/category.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MapService {
   currentLocations: Location[] = [];
+  categories: Category[] = [];
   locationsUpdated = new Subject<boolean>();
+  categoriesUpdated = new Subject<boolean>();
+
   constructor(private http: HttpClient) {
     mapboxgl.accessToken = environment.mapbox.accessToken;
+  }
+
+  getLocationCategories() {
+    this.http
+      .get<{ message: String; results: Category[] }>(
+        'http://localhost:3000/api/categories'
+      )
+      .pipe(
+        map(data => {
+          // console.log("data from pipe: " + data.results);
+          return data.results.map(category => {
+            const newType = category.name.trim();
+            return new Category(
+              newType,
+              category.id
+            )
+          })
+        })
+      )
+      .subscribe((data) => {
+        console.log(data);
+        this.categories = data;
+        this.categoriesUpdated.next(true);
+      });
   }
 
   getMarkers() {

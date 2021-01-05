@@ -17,7 +17,7 @@ client.connect()
 router.get("", (req, res, next) => {
   console.log("get categories called");
   let results;
-  client.query("SELECT * FROM categories").then((result) => {
+  client.query("SELECT * FROM categories").then(result => {
     results = result.rows;
     console.log(results);
     res.status(200).json({
