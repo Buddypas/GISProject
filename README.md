@@ -5,6 +5,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## TODO
 * Create branch and implement layers with sources to load locations
 * Turn locations into expansion panels
+* Add specific icons for each category
+* Try adding classes for feature collections, features etc.
 
 
 ## Development server

@@ -139,8 +139,10 @@ export class MapComponent implements OnInit {
       // When a click event occurs on a feature in the places layer, open a popup at the
       // location of the feature, with description HTML from its properties.
       this.map.on('click', 'places', (e) => {
+        console.log(e.features);
         let coordinates = e.features[0].geometry.coordinates.slice();
         let description = e.features[0].properties.description;
+        let name = e.features[0].properties.name;
 
         // Ensure that if the map is zoomed out such that multiple
         // copies of the feature are visible, the popup appears

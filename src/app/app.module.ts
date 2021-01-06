@@ -23,6 +23,7 @@ import { MapComponent } from './map/map.component';
 import { LocationsComponent } from './locations/locations.component';
 import { LocationListComponent } from './locations/location-list/location-list.component';
 import { AddLocationSheetComponent } from './locations/add-location/add-location-sheet.component';
+import { LocationDetailsComponent } from './locations/location-details/location-details.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { AddLocationSheetComponent } from './locations/add-location/add-location
     LocationsComponent,
     LocationListComponent,
     AddLocationSheetComponent,
+    LocationDetailsComponent,
   ],
   imports: [
     BrowserModule,
