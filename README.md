@@ -3,7 +3,9 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.4.
 
 ## TODO
+* Create branch and implement layers with sources to load locations
 * Turn locations into expansion panels
+
 
 ## Development server
 

@@ -75,6 +75,7 @@ export class MapComponent implements OnInit {
     });
     /// Add map controls
     this.map.addControl(new mapboxgl.NavigationControl());
+    this.map
 
     //// Add Marker on Click
     this.map.on('click', (event) => {
@@ -85,9 +86,9 @@ export class MapComponent implements OnInit {
       this.lng = coordinates[0];
       this.lat = coordinates[1];
 
-      const marker = new mapboxgl.Marker()
-        .setLngLat([coordinates[0], coordinates[1]])
-        .addTo(this.map);
+      // const marker = new mapboxgl.Marker()
+      //   .setLngLat([coordinates[0], coordinates[1]])
+      //   .addTo(this.map);
       this.openBottomSheet();
     });
   }
