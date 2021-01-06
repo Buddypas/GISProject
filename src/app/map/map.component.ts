@@ -19,6 +19,7 @@ export class MapComponent implements OnInit {
   lng = -122.41;
   locationsSub: Subscription;
   locations: Location[] = [];
+  features = [];
 
   constructor(
     private mapService: MapService,
@@ -28,28 +29,35 @@ export class MapComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeMap();
-    this.locationsSub = this.mapService.locationsUpdated.subscribe(
-      (hasChanged) => {
-        if (hasChanged) {
-          if (
-            this.mapService.currentLocations.length > this.locations.length &&
-            this.locations.length > 0
-          )
-            this._snackBar.open('Location added!', 'Close', { duration: 2500 });
-          this.locations = [...this.mapService.currentLocations];
-          this.loadMarkers();
-        }
-      }
-    );
-    this.mapService.getMarkers();
   }
 
   private loadMarkers() {
-    this.locations.forEach(loc =>
-      new mapboxgl.Marker()
-        .setLngLat([loc.longitude,loc.latitude])
-        .addTo(this.map)
-    )
+    // this.locations.forEach((loc) =>
+    //   new mapboxgl.Marker()
+    //     .setLngLat([loc.longitude, loc.latitude])
+    //     .addTo(this.map)
+    // );
+    // TODO: add specific icons for each category
+
+    this.locations.forEach((loc) => {
+      let feature = {
+        type: 'Feature',
+        properties: {
+          name: loc.name,
+          description: loc.description,
+          icon: 'bar',
+        },
+        geometry: {
+          type: 'Point',
+          coordinates: [loc.longitude, loc.latitude],
+        },
+      };
+      this.features.push(feature);
+    });
+    this.map.getSource('places').setData({
+      type: 'FeatureCollection',
+      features: this.features,
+    });
   }
 
   private initializeMap() {
@@ -75,7 +83,6 @@ export class MapComponent implements OnInit {
     });
     /// Add map controls
     this.map.addControl(new mapboxgl.NavigationControl());
-    this.map
 
     //// Add Marker on Click
     this.map.on('click', (event) => {
@@ -90,6 +97,42 @@ export class MapComponent implements OnInit {
       //   .setLngLat([coordinates[0], coordinates[1]])
       //   .addTo(this.map);
       this.openBottomSheet();
+    });
+
+    this.map.on('load', () => {
+      this.map.addSource('places', {
+        type: 'geojson',
+        data: {
+          type: 'FeatureCollection',
+          features: this.features,
+        },
+      });
+
+      // Add a layer showing the places.
+      this.map.addLayer({
+        id: 'places',
+        type: 'symbol',
+        source: 'places',
+        'layout': {
+          'icon-image': '{icon}-15',
+          'icon-allow-overlap': true,
+        },
+      });
+
+      this.locationsSub = this.mapService.locationsUpdated.subscribe(
+        (hasChanged) => {
+          if (hasChanged) {
+            if (
+              this.mapService.currentLocations.length > this.locations.length &&
+              this.locations.length > 0
+            )
+              this._snackBar.open('Location added!', 'Close', { duration: 2500 });
+            this.locations = [...this.mapService.currentLocations];
+            this.loadMarkers();
+          }
+        }
+      );
+      this.mapService.getMarkers();
     });
   }
 
