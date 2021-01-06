@@ -37,10 +37,19 @@ export class MapComponent implements OnInit {
           )
             this._snackBar.open('Location added!', 'Close', { duration: 2500 });
           this.locations = [...this.mapService.currentLocations];
+          this.loadMarkers();
         }
       }
     );
     this.mapService.getMarkers();
+  }
+
+  private loadMarkers() {
+    this.locations.forEach(loc =>
+      new mapboxgl.Marker()
+        .setLngLat([loc.longitude,loc.latitude])
+        .addTo(this.map)
+    )
   }
 
   private initializeMap() {
