@@ -17,12 +17,12 @@ export class AddLocationSheetComponent implements OnInit {
   categoriesSub: Subscription;
   constructor(
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: {lng:number,lat:number},
-    private _bottomSheetRef: MatBottomSheetRef<AddLocationSheetComponent>,
+    private bottomSheetRef: MatBottomSheetRef<AddLocationSheetComponent>,
     private mapService:MapService
   ) {}
 
   ngOnInit(): void {
-    this.categoriesSub = this.mapService.categoriesUpdated.subscribe(hasChanged =>{
+    this.categoriesSub = this.mapService.categoriesUpdated.subscribe(hasChanged => {
       if(hasChanged) {
         this.categories = this.mapService.categories;
         // console.log(this.categories);
@@ -34,6 +34,11 @@ export class AddLocationSheetComponent implements OnInit {
 
   onSubmit() {
     console.log(this.location);
-    this.mapService.addLocation(this.location);
+    this.mapService.addLocation(this.location).subscribe(response => {
+      console.log("response from sheet: " + response);
+      this.mapService.currentLocations.push(this.location);
+      this.mapService.locationsUpdated.next(true);
+      this.bottomSheetRef.dismiss();
+    })
   }
 }

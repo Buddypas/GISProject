@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import mapboxgl from 'mapbox-gl';
 import { environment } from 'src/environments/environment';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Location } from './models/location.model';
 import { Category } from './models/category.model';
 
@@ -76,10 +76,10 @@ export class MapService {
       });
   }
 
-  addLocation(location:Location) {
-    this.http.post('http://localhost:3000/api/locations/add',location)
-    .subscribe(response => {
-      console.log("response from map service: " + response);
-    })
+  addLocation(location:Location): Observable<any> {
+    return this.http.post('http://localhost:3000/api/locations/add',location)
+    // .subscribe(response => {
+    //   console.log("response from map service: " + response);
+    // })
   }
 }

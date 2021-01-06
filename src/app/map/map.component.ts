@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import mapboxgl from 'mapbox-gl';
+import { Subscription } from 'rxjs';
 import { AddLocationSheetComponent } from '../locations/add-location/add-location-sheet.component';
 import { MapService } from '../map.service';
+import { Location } from '../models/location.model';
 import { GeoJson } from '../models/map';
 
 @Component({
@@ -14,11 +17,29 @@ export class MapComponent implements OnInit {
   map: mapboxgl.Map;
   lat = 37.75;
   lng = -122.41;
+  locationsSub: Subscription;
+  locations: Location[] = [];
 
-  constructor(private mapService: MapService, private _bottomSheet: MatBottomSheet) {}
+  constructor(
+    private mapService: MapService,
+    private _bottomSheet: MatBottomSheet,
+    private _snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.initializeMap();
+    this.locationsSub = this.mapService.locationsUpdated.subscribe(
+      (hasChanged) => {
+        if (hasChanged) {
+          if (
+            this.mapService.currentLocations.length > this.locations.length &&
+            this.locations.length > 0
+          )
+            this._snackBar.open('Location added!', 'Close', { duration: 2500 });
+          this.locations = [...this.mapService.currentLocations];
+        }
+      }
+    );
     this.mapService.getMarkers();
   }
 
@@ -59,7 +80,6 @@ export class MapComponent implements OnInit {
         .setLngLat([coordinates[0], coordinates[1]])
         .addTo(this.map);
       this.openBottomSheet();
-
     });
   }
 
@@ -70,6 +90,8 @@ export class MapComponent implements OnInit {
   }
 
   openBottomSheet(): void {
-    this._bottomSheet.open(AddLocationSheetComponent,{data: {lng:this.lng,lat:this.lat}});
+    this._bottomSheet.open(AddLocationSheetComponent, {
+      data: { lng: this.lng, lat: this.lat },
+    });
   }
 }
