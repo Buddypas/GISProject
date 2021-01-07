@@ -7,6 +7,7 @@ import { AddLocationSheetComponent } from '../locations/add-location/add-locatio
 import { MapService } from '../map.service';
 import { Location } from '../models/location.model';
 import { GeoJson } from '../models/map';
+import { CATEGORY_ICON_MAP } from '../constants';
 
 @Component({
   selector: 'app-map',
@@ -45,7 +46,7 @@ export class MapComponent implements OnInit {
         properties: {
           name: loc.name,
           description: loc.description,
-          icon: 'bar',
+          icon: CATEGORY_ICON_MAP[loc.categoryId]
         },
         geometry: {
           type: 'Point',

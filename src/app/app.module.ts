@@ -16,23 +16,27 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import { MapComponent } from './map/map.component';
 import { LocationsComponent } from './locations/locations.component';
-import { LocationListComponent } from './locations/location-list/location-list.component';
 import { AddLocationSheetComponent } from './locations/add-location/add-location-sheet.component';
 import { LocationDetailsComponent } from './locations/location-details/location-details.component';
+import { InfoContainerComponent } from './info-container/info-container.component';
+import { LocationComponent } from './locations/location/location.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MapComponent,
     LocationsComponent,
-    LocationListComponent,
     AddLocationSheetComponent,
     LocationDetailsComponent,
+    InfoContainerComponent,
+    LocationComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,6 +54,8 @@ import { LocationDetailsComponent } from './locations/location-details/location-
     MatSelectModule,
     MatButtonModule,
     MatSnackBarModule,
+    MatExpansionModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,19 +1,20 @@
-<mat-card style="margin-top: 5%;margin-right: 5%;">
-  <mat-card-title>
-    <h1>Locations</h1>
-  </mat-card-title>
-
-  <mat-card-content>
-    <cdk-virtual-scroll-viewport itemSize="50" class="locations-scrollable-container">
-      <div *cdkVirtualFor="let location of locations">
-        <h2>{{ location.name }}</h2>
-        <p>
-          <span>Longitude: {{ location.longitude }} </span>
-          <span>Latitude: {{ location.latitude }}</span>
-        </p>
-        <p>{{ location.description }}</p>
-        <mat-divider></mat-divider>
+<div class="locations-accordion-container">
+  <mat-accordion>
+    <mat-expansion-panel hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h2 class="mat-display-1">Locations</h2>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div *ngIf="locations.length == 0" style="margin:auto; width: 25%; height:25%">
+        <mat-spinner></mat-spinner>
       </div>
-    </cdk-virtual-scroll-viewport>
-  </mat-card-content>
-</mat-card>
+      <cdk-virtual-scroll-viewport itemSize="50" class="locations-scrollable-container">
+        <div *cdkVirtualFor="let location of locations">
+          <app-location [location]="location"></app-location>
+          <mat-divider></mat-divider>
+        </div>
+      </cdk-virtual-scroll-viewport>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
