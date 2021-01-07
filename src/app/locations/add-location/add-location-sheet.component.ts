@@ -23,10 +23,7 @@ export class AddLocationSheetComponent implements OnInit {
 
   ngOnInit(): void {
     this.categoriesSub = this.mapService.categoriesUpdated.subscribe(hasChanged => {
-      if(hasChanged) {
-        this.categories = this.mapService.categories;
-        // console.log(this.categories);
-      }
+      if(hasChanged) this.categories = this.mapService.categories;
     })
     if(this.mapService.categories.length > 0) this.categories = this.mapService.categories;
     else this.mapService.getLocationCategories();

@@ -3,8 +3,8 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.4.
 
 ## TODO
+- Rate locations with stars
 - Try adding classes for feature collections, features etc.
-- Add loader to locations panel
 
 ## Development server
 

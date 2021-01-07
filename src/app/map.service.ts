@@ -29,15 +29,12 @@ export class MapService {
         'http://localhost:3000/api/categories'
       )
       .pipe(
-        map(data => {
+        map((data) => {
           // console.log("data from pipe: " + data.results);
-          return data.results.map(category => {
+          return data.results.map((category) => {
             const newType = category.name.trim();
-            return new Category(
-              newType,
-              category.id
-            )
-          })
+            return new Category(newType, category.id);
+          });
         })
       )
       .subscribe((data) => {
@@ -79,8 +76,14 @@ export class MapService {
       });
   }
 
-  addLocation(location:Location): Observable<any> {
-    return this.http.post('http://localhost:3000/api/locations/add',location);
+  rateLocation(rating: number): Observable<any> {
+    return this.http.post('http://localhost:3000/api/locations', {
+      rating: rating,
+    });
+  }
+
+  addLocation(location: Location): Observable<any> {
+    return this.http.post('http://localhost:3000/api/locations/add', location);
   }
 
   updateLocation(loc: Location | null) {
@@ -88,9 +91,9 @@ export class MapService {
     this.activeLocationUpdated.next(true);
   }
 
-  findLocationById(id:number): Location | null {
-    for(let location of this.currentLocations) {
-      if(location.id == id) return location;
+  findLocationById(id: number): Location | null {
+    for (let location of this.currentLocations) {
+      if (location.id == id) return location;
     }
     return null;
   }
