@@ -1,1 +1,6 @@
-<p>location-details works!</p>
+<mat-card *ngIf="location != null">
+  <mat-card-title>
+    <h1 class="location-name mat-display-1">{{location.name}}</h1>
+  </mat-card-title>
+  <mat-card-content><p class="location-description mat-h3">{{location.description}}</p></mat-card-content>
+</mat-card>

@@ -3,10 +3,10 @@
     <mat-expansion-panel hideToggle>
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <h2 class="mat-display-1">Locations</h2>
+          <h2 class="mat-display-3">Locations</h2>
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <div *ngIf="locations.length == 0" style="margin:auto; width: 25%; height:25%">
+      <div *ngIf="locations.length == 0" class="spinner-container">
         <mat-spinner></mat-spinner>
       </div>
       <cdk-virtual-scroll-viewport itemSize="50" class="locations-scrollable-container">

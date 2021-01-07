@@ -16,6 +16,8 @@ export class MapService {
   categories: Category[] = [];
   locationsUpdated = new Subject<boolean>();
   categoriesUpdated = new Subject<boolean>();
+  activeLocationUpdated = new Subject<boolean>();
+  currentLocation: Location;
 
   constructor(private http: HttpClient) {
     mapboxgl.accessToken = environment.mapbox.accessToken;
@@ -47,7 +49,7 @@ export class MapService {
 
   getMarkers() {
     this.http
-      .get<{ message: String; results: Location[] }>(
+      .get<{ message: String; results: any[] }>(
         'http://localhost:3000/api/locations'
       )
       .pipe(
@@ -64,6 +66,7 @@ export class MapService {
               location.latitude,
               newName,
               newDesc,
+              location.category_id,
               location.id
             );
           });
@@ -77,9 +80,18 @@ export class MapService {
   }
 
   addLocation(location:Location): Observable<any> {
-    return this.http.post('http://localhost:3000/api/locations/add',location)
-    // .subscribe(response => {
-    //   console.log("response from map service: " + response);
-    // })
+    return this.http.post('http://localhost:3000/api/locations/add',location);
+  }
+
+  updateLocation(loc: Location | null) {
+    this.currentLocation = loc;
+    this.activeLocationUpdated.next(true);
+  }
+
+  findLocationById(id:number): Location | null {
+    for(let location of this.currentLocations) {
+      if(location.id == id) return location;
+    }
+    return null;
   }
 }

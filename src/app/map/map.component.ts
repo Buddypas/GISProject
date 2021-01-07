@@ -32,35 +32,6 @@ export class MapComponent implements OnInit {
     this.initializeMap();
   }
 
-  private loadMarkers() {
-    // this.locations.forEach((loc) =>
-    //   new mapboxgl.Marker()
-    //     .setLngLat([loc.longitude, loc.latitude])
-    //     .addTo(this.map)
-    // );
-    // TODO: add specific icons for each category
-
-    this.locations.forEach((loc) => {
-      let feature = {
-        type: 'Feature',
-        properties: {
-          name: loc.name,
-          description: loc.description,
-          icon: CATEGORY_ICON_MAP[loc.categoryId]
-        },
-        geometry: {
-          type: 'Point',
-          coordinates: [loc.longitude, loc.latitude],
-        },
-      };
-      this.features.push(feature);
-    });
-    this.map.getSource('places').setData({
-      type: 'FeatureCollection',
-      features: this.features,
-    });
-  }
-
   private initializeMap() {
     /// locate the user
     this.buildMap();
@@ -85,21 +56,6 @@ export class MapComponent implements OnInit {
     /// Add map controls
     this.map.addControl(new mapboxgl.NavigationControl());
 
-    //// Add Marker on Click
-    this.map.on('click', (event) => {
-      const coordinates = [event.lngLat.lng, event.lngLat.lat];
-      console.log(
-        'longitude:' + coordinates[0] + ', latitude: ' + coordinates[1]
-      );
-      this.lng = coordinates[0];
-      this.lat = coordinates[1];
-
-      // const marker = new mapboxgl.Marker()
-      //   .setLngLat([coordinates[0], coordinates[1]])
-      //   .addTo(this.map);
-      this.openBottomSheet();
-    });
-
     this.map.on('load', () => {
       this.map.addSource('places', {
         type: 'geojson',
@@ -120,6 +76,44 @@ export class MapComponent implements OnInit {
         },
       });
 
+      // When a click event occurs on a feature in the places layer, open a popup at the
+      // location of the feature, with description HTML from its properties.
+      this.map.on('click', 'places', (e) => {
+        e.preventDefault();
+        let coordinates = e.features[0].geometry.coordinates.slice();
+        let id = e.features[0].properties.id;
+
+        // Ensure that if the map is zoomed out such that multiple
+        // copies of the feature are visible, the popup appears
+        // over the copy being pointed to.
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+          coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+        const activeLoc = this.mapService.findLocationById(id);
+        this.mapService.updateLocation(activeLoc);
+      });
+
+      // Change the cursor to a pointer when the mouse is over the places layer.
+      this.map.on('mouseenter', 'places', () => {
+        this.map.getCanvas().style.cursor = 'pointer';
+      });
+
+      // Change it back to a pointer when it leaves.
+      this.map.on('mouseleave', 'places',  () => {
+        this.map.getCanvas().style.cursor = '';
+      });
+
+      //// Add Marker on Click
+      this.map.on('click', (event) => {
+        if(event.defaultPrevented) return;
+        if(this.mapService.currentLocation != null) this.mapService.updateLocation(null);
+        const coordinates = [event.lngLat.lng, event.lngLat.lat];
+        this.lng = coordinates[0];
+        this.lat = coordinates[1];
+        console.log('lng: ' + this.lng + ', lat: ' + this.lat);
+        this.openBottomSheet();
+      });
+
       this.locationsSub = this.mapService.locationsUpdated.subscribe(
         (hasChanged) => {
           if (hasChanged) {
@@ -136,37 +130,29 @@ export class MapComponent implements OnInit {
         }
       );
       this.mapService.getMarkers();
+    });
+  }
 
-      // When a click event occurs on a feature in the places layer, open a popup at the
-      // location of the feature, with description HTML from its properties.
-      this.map.on('click', 'places', (e) => {
-        console.log(e.features);
-        let coordinates = e.features[0].geometry.coordinates.slice();
-        let description = e.features[0].properties.description;
-        let name = e.features[0].properties.name;
-
-        // Ensure that if the map is zoomed out such that multiple
-        // copies of the feature are visible, the popup appears
-        // over the copy being pointed to.
-        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-          coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-        }
-
-        new mapboxgl.Popup()
-          .setLngLat(coordinates)
-          .setHTML(description)
-          .addTo(this.map);
-      });
-
-      // Change the cursor to a pointer when the mouse is over the places layer.
-      this.map.on('mouseenter', 'places', function () {
-        this.map.getCanvas().style.cursor = 'pointer';
-      });
-
-      // Change it back to a pointer when it leaves.
-      this.map.on('mouseleave', 'places', function () {
-        this.map.getCanvas().style.cursor = '';
-      });
+  private loadMarkers() {
+    this.locations.forEach((loc) => {
+      let feature = {
+        type: 'Feature',
+        properties: {
+          id: loc.id,
+          name: loc.name,
+          description: loc.description,
+          icon: CATEGORY_ICON_MAP[loc.categoryId],
+        },
+        geometry: {
+          type: 'Point',
+          coordinates: [loc.longitude, loc.latitude],
+        },
+      };
+      this.features.push(feature);
+    });
+    this.map.getSource('places').setData({
+      type: 'FeatureCollection',
+      features: this.features,
     });
   }
 

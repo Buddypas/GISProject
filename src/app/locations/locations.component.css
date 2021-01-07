@@ -1,6 +1,6 @@
 .locations-accordion-container {
   margin-top: 5%;
-  margin-right: 8%
+  margin-right: 8%;
 }
 
 mat-expansion-panel-header {
@@ -9,6 +9,13 @@ mat-expansion-panel-header {
 
 mat-panel-title > h2 {
   margin-bottom: 0px;
+}
+
+
+.spinner-container {
+  margin:auto;
+  width: 25%;
+  height:25%
 }
 
 .locations-scrollable-container {
