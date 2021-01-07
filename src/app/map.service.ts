@@ -76,9 +76,10 @@ export class MapService {
       });
   }
 
-  rateLocation(rating: number): Observable<any> {
-    return this.http.post('http://localhost:3000/api/locations', {
-      rating: rating,
+  rateLocation(id:number,rating: number): Observable<any> {
+    return this.http.post('http://localhost:3000/api/locations/rate', {
+      id:id,
+      rating: rating
     });
   }
 

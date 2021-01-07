@@ -23,7 +23,10 @@ export class LocationDetailsComponent implements OnInit,OnDestroy {
   }
 
   onRateClicked() {
-    console.log(this.rating);
+    // console.log(this.rating);
+    this.mapService.rateLocation(this.location.id,this.rating.value).subscribe((result) => {
+      console.log(result.message);
+    });
   }
 
   ngOnDestroy(): void {

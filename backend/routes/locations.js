@@ -65,6 +65,7 @@ router.post("/add", (req, res) => {
 router.post("/rate", (req, res) => {
   console.log("rate location called");
   const locationId = req.body.id;
+  console.log('locationId: ' + locationId);
   const getLocationQueryText = "SELECT * FROM locations WHERE id = $1";
   const getLocationQueryValues = [locationId];
   client
@@ -82,7 +83,7 @@ router.post("/rate", (req, res) => {
       client.query(updateQueryText,updateQueryValues)
       .then(() => {
         res.status(200).json({
-          message: success
+          message: 'success'
         });
       })
       .catch((e) => {
