@@ -19,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
 
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
@@ -28,6 +29,8 @@ import { AddLocationSheetComponent } from './locations/add-location/add-location
 import { LocationDetailsComponent } from './locations/location-details/location-details.component';
 import { InfoContainerComponent } from './info-container/info-container.component';
 import { LocationComponent } from './locations/location/location.component';
+import { LoginComponent } from './login/login.component';
+import { MainComponent } from './main/main.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +41,8 @@ import { LocationComponent } from './locations/location/location.component';
     LocationDetailsComponent,
     InfoContainerComponent,
     LocationComponent,
+    LoginComponent,
+    MainComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,6 +63,7 @@ import { LocationComponent } from './locations/location/location.component';
     MatSnackBarModule,
     MatExpansionModule,
     MatProgressSpinnerModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

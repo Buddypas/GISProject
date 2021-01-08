@@ -3,6 +3,7 @@ export class Location {
   latitude: number;
   longitude: number;
   name: string;
+  rating?:number;
   description?: string;
   categoryId?: number;
 
@@ -13,6 +14,7 @@ export class Location {
     description?: string,
     categoryId?: number,
     id?: number,
+    rating?:number
   ) {
     this.longitude = longitude;
     this.latitude = latitude;
@@ -20,5 +22,6 @@ export class Location {
     this.id = id;
     this.description = description;
     this.categoryId = categoryId;
+    this.rating = rating;
   }
 }

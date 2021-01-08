@@ -3,6 +3,34 @@ mat-card {
   margin-right: 8%;
 }
 
+mat-card-subtitle {
+  height: 30px;
+  margin-bottom: 0px;
+}
+
+mat-card-subtitle > div {
+  display: flex;
+  align-items: center;
+  height:100%;
+}
+
+div > p {
+  margin-bottom: 0px;
+  margin-left: 6px;
+}
+
+mat-icon {
+  transform: scale(1.5);
+}
+
+.mat-form-field-wrapper {
+  display: none;
+}
+
 .location-name {
   margin-bottom: 0px;
 }
+
+/* button.mat-raised-button {
+  margin-bottom: ;
+} */

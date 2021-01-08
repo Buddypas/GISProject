@@ -64,7 +64,8 @@ export class MapService {
               newName,
               newDesc,
               location.category_id,
-              location.id
+              location.id,
+              location.rating
             );
           });
         })
