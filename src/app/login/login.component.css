@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 25%;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+
+h2.mat-display-2 {
+  margin-top: 40%;
+}
+
+mat-form-field {
+  display:block;
+}

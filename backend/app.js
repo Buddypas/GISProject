@@ -6,7 +6,7 @@ const categoryRoutes = require("./routes/categories");
 const app = express();
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -25,4 +25,4 @@ app.use((req, res, next) => {
 app.use("/api/locations", locationRoutes);
 app.use("/api/categories", categoryRoutes);
 
-module.exports = app
+module.exports = app;
