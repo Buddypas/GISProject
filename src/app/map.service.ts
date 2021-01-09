@@ -6,14 +6,14 @@ import mapboxgl from 'mapbox-gl';
 import { environment } from 'src/environments/environment';
 import { Observable, Subject } from 'rxjs';
 import { Location } from './models/location.model';
-import { Category } from './models/category.model';
+import { CATEGORY_ICON_MAP } from './constants';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MapService {
   currentLocations: Location[] = [];
-  categories: Category[] = [];
+  categories = [];
   locationsUpdated = new Subject<boolean>();
   categoriesUpdated = new Subject<boolean>();
   activeLocationUpdated = new Subject<boolean>();
@@ -21,27 +21,9 @@ export class MapService {
 
   constructor(private http: HttpClient) {
     mapboxgl.accessToken = environment.mapbox.accessToken;
-  }
-
-  getLocationCategories() {
-    this.http
-      .get<{ message: String; results: Category[] }>(
-        'http://localhost:3000/api/categories'
-      )
-      .pipe(
-        map((data) => {
-          // console.log("data from pipe: " + data.results);
-          return data.results.map((category) => {
-            const newType = category.name.trim();
-            return new Category(newType, category.id);
-          });
-        })
-      )
-      .subscribe((data) => {
-        console.log(data);
-        this.categories = data;
-        this.categoriesUpdated.next(true);
-      });
+    for(const property in CATEGORY_ICON_MAP) {
+      this.categories.push(property);
+    }
   }
 
   getMarkers() {
@@ -51,6 +33,7 @@ export class MapService {
       )
       .pipe(
         map((data) => {
+          console.log("locations from map service before pipe: " + data.results[0].category);
           return data.results.map((location) => {
             const newName = location.name.trim();
             let newDesc: string | null;
@@ -62,8 +45,8 @@ export class MapService {
               location.longitude,
               location.latitude,
               newName,
+              location.category,
               newDesc,
-              location.category_id,
               location.id,
               location.rating
             );
@@ -77,10 +60,10 @@ export class MapService {
       });
   }
 
-  rateLocation(id:number,rating: number): Observable<any> {
+  rateLocation(id: number, rating: number): Observable<any> {
     return this.http.post('http://localhost:3000/api/locations/rate', {
-      id:id,
-      rating: rating
+      id: id,
+      rating: rating,
     });
   }
 

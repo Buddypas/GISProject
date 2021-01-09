@@ -2,9 +2,9 @@ import { Component, Inject,OnInit } from '@angular/core';
 import { MatBottomSheetRef,MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { Subscription } from 'rxjs';
 import { MapService } from 'src/app/map.service';
-import { Category } from 'src/app/models/category.model';
 
 import { Location } from '../../models/location.model';
+
 
 @Component({
   selector: 'app-add-location-sheet',
@@ -12,9 +12,9 @@ import { Location } from '../../models/location.model';
   styleUrls: ['./add-location-sheet.component.css'],
 })
 export class AddLocationSheetComponent implements OnInit {
-  location = new Location(this.data.lng, this.data.lat, '','');
-  categories: Category[] = [];
-  categoriesSub: Subscription;
+  location = new Location(this.data.lng, this.data.lat, '','','');
+  categories = [];
+
   constructor(
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: {lng:number,lat:number},
     private bottomSheetRef: MatBottomSheetRef<AddLocationSheetComponent>,
@@ -22,11 +22,7 @@ export class AddLocationSheetComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.categoriesSub = this.mapService.categoriesUpdated.subscribe(hasChanged => {
-      if(hasChanged) this.categories = this.mapService.categories;
-    })
-    if(this.mapService.categories.length > 0) this.categories = this.mapService.categories;
-    else this.mapService.getLocationCategories();
+    this.categories = this.mapService.categories;
   }
 
   onSubmit() {

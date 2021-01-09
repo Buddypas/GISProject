@@ -1,6 +1,8 @@
 const express = require("express");
+const {Client} = require("pg");
+const Location = require("../models/location");
+const sequelize = require("../shared/my-sequelize");
 const router = express.Router();
-const { Client } = require("pg");
 
 const client = new Client({
   user: "postgres",
@@ -16,15 +18,27 @@ client.connect();
  */
 router.get("", (req, res) => {
   console.log("get called");
-  let results;
-  client.query("SELECT * FROM locations").then((result) => {
-    results = result.rows;
-    console.log(results);
+  let results = Location.findAll().then(locations => {
+    console.log("locations: " + locations);
     res.status(200).json({
       message: "success",
-      results: results,
+      results: locations,
     });
-  });
+  })
+  .catch(err => {
+    res.status(500).json({
+      message: err
+    });
+  })
+
+  // client.query("SELECT * FROM locations").then((result) => {
+  //   results = result.rows;
+  //   console.log(results);
+  //   res.status(200).json({
+  //     message: "success",
+  //     results: results,
+  //   });
+  // });
 });
 
 /**

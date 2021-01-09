@@ -141,7 +141,7 @@ export class MapComponent implements OnInit {
           id: loc.id,
           name: loc.name,
           description: loc.description,
-          icon: CATEGORY_ICON_MAP[loc.categoryId],
+          icon: CATEGORY_ICON_MAP[loc.category.trim()],
         },
         geometry: {
           type: 'Point',

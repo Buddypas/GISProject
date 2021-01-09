@@ -3,16 +3,16 @@ export class Location {
   latitude: number;
   longitude: number;
   name: string;
+  category:string;
   rating?:number;
   description?: string;
-  categoryId?: number;
 
   constructor(
     longitude: number,
     latitude: number,
     name: string,
+    category: string,
     description?: string,
-    categoryId?: number,
     id?: number,
     rating?:number
   ) {
@@ -21,7 +21,7 @@ export class Location {
     this.name = name;
     this.id = id;
     this.description = description;
-    this.categoryId = categoryId;
+    this.category = category;
     this.rating = rating;
   }
 }

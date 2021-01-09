@@ -24,8 +24,8 @@
       <br>
       <mat-form-field class="location-field-large" appearance="outline">
         <mat-label>Category:</mat-label>
-        <mat-select name="category" [(ngModel)]="location.categoryId" required>
-          <mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
+        <mat-select name="category" [(ngModel)]="location.category" required>
+          <mat-option *ngFor="let c of categories" [value]="c">{{c.name}}</mat-option>
         </mat-select>
       </mat-form-field>
       <br>
