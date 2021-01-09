@@ -29,7 +29,7 @@ import { AddLocationSheetComponent } from './locations/add-location/add-location
 import { LocationDetailsComponent } from './locations/location-details/location-details.component';
 import { InfoContainerComponent } from './info-container/info-container.component';
 import { LocationComponent } from './locations/location/location.component';
-import { LoginComponent } from './login/login.component';
+import { AuthComponent } from './auth/auth.component';
 import { MainComponent } from './main/main.component';
 
 @NgModule({
@@ -41,7 +41,7 @@ import { MainComponent } from './main/main.component';
     LocationDetailsComponent,
     InfoContainerComponent,
     LocationComponent,
-    LoginComponent,
+    AuthComponent,
     MainComponent,
   ],
   imports: [
