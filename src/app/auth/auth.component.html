@@ -1,19 +1,54 @@
-<div class="container">
-  <h2 class="mat-display-2">{{isLoginMode ? 'Login' : 'Sign up'}}</h2>
+<div class="container" [ngClass]="{'invisible': !isLoginMode}">
+  <h2 class="mat-display-2">Login</h2>
   <div class="form-container">
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
       <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>
         <input type="email" matInput formControlName="email">
-        <mat-error *ngIf="loginForm.get('email').invalid">{{getErrorMessage('email')}}</mat-error>
+        <mat-error *ngIf="loginForm.get('email').invalid">{{getErrorMessage('login','email')}}</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Password</mat-label>
         <input type="password" matInput formControlName="password">
-        <mat-error *ngIf="loginForm.get('password').invalid">{{getErrorMessage('password')}}</mat-error>
+        <mat-error *ngIf="loginForm.get('password').invalid">{{getErrorMessage('login','password')}}</mat-error>
       </mat-form-field>
-      <button [disabled]="loginForm.dirty && !loginForm.valid" mat-button mat-stroked-button type="submit">{{isLoginMode ? "Log in" : "Create account"}}</button>
+      <button [disabled]="loginForm.dirty && !loginForm.valid" mat-button mat-stroked-button type="submit">Log
+        in</button>
     </form>
   </div>
-  <p class="mat-body" style="margin-top:6px">{{isLoginMode ? "Don't have an account?" : "Already have an account?"}} <strong (click)="onRegisterClicked()">{{isLoginMode ? "Sign up" : "Sign in"}}</strong></p>
+  <p class="mat-body">Don't have an account?<strong (click)="onRegisterClicked()">Sign
+      up</strong></p>
+</div>
+
+<div class="container" [ngClass]="{'invisible': isLoginMode}">
+  <h2 class="mat-display-2">Sign up</h2>
+  <div class="form-container">
+    <form [formGroup]="signupForm" (ngSubmit)="onRegister()">
+      <mat-form-field appearance="outline">
+        <mat-label>Username</mat-label>
+        <input type="text" matInput formControlName="username">
+        <mat-error *ngIf="signupForm.get('username').invalid">{{getErrorMessage('register','username')}}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput formControlName="email">
+        <mat-error *ngIf="signupForm.get('email').invalid">{{getErrorMessage('register','email')}}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input type="password" matInput formControlName="password">
+        <mat-error *ngIf="signupForm.get('password').invalid">{{getErrorMessage('register','password')}}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Confirm Password</mat-label>
+        <input type="password" matInput formControlName="confirmPassword">
+        <mat-error *ngIf="signupForm.get('confirmPassword').invalid">{{getErrorMessage('register','confirmPassword')}}</mat-error>
+      </mat-form-field>
+      <button [disabled]="signupForm.dirty && !signupForm.valid" mat-button mat-stroked-button type="submit">Create
+        account</button>
+    </form>
+  </div>
+  <p class="mat-body">Already have an account?
+    <strong (click)="onRegisterClicked()">Sign in</strong>
+  </p>
 </div>
