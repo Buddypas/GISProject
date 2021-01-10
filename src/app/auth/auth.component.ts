@@ -8,7 +8,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./auth.component.css'],
 })
 export class AuthComponent implements OnInit {
-  isLoginMode=false;
+  isLoginMode=true;
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [
@@ -42,5 +42,9 @@ export class AuthComponent implements OnInit {
 
   onSubmit() {
 
+  }
+
+  onRegisterClicked() {
+    this.isLoginMode = !this.isLoginMode;
   }
 }

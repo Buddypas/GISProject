@@ -1,5 +1,5 @@
 <div class="container">
-  <h2 class="mat-display-2">Login</h2>
+  <h2 class="mat-display-2">{{isLoginMode ? 'Login' : 'Sign up'}}</h2>
   <div class="form-container">
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="outline">
@@ -12,7 +12,8 @@
         <input type="password" matInput formControlName="password">
         <mat-error *ngIf="loginForm.get('password').invalid">{{getErrorMessage('password')}}</mat-error>
       </mat-form-field>
-      <button [disabled]="loginForm.dirty && !loginForm.valid" mat-button mat-stroked-button type="submit">Log in</button>
+      <button [disabled]="loginForm.dirty && !loginForm.valid" mat-button mat-stroked-button type="submit">{{isLoginMode ? "Log in" : "Create account"}}</button>
     </form>
   </div>
+  <p class="mat-body" style="margin-top:6px">{{isLoginMode ? "Don't have an account?" : "Already have an account?"}} <strong (click)="onRegisterClicked()">{{isLoginMode ? "Sign up" : "Sign in"}}</strong></p>
 </div>

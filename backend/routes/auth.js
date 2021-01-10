@@ -16,13 +16,13 @@ const router = express.Router();
  */
 router.post("/login", (req, res) => {
   console.log("login called");
+  console.log(req.body);
   // res.setHeader('Set-Cookie','loggedIn=true; HttpOnly');
   // client.query("SELECT * FROM locations").then((result) => {
   //   results = result.rows;
   //   console.log(results);
   res.status(200).json({
-    message: "success",
-    loggedIn: true,
+    message: "success"
   });
   // });
 });
