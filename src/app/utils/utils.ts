@@ -12,7 +12,7 @@ export function checkPasswordMatch(
       return;
     }
     if (control.value !== matchingControl.value) {
-      matchingControl.setErrors({ confirmedValidator: true });
+      matchingControl.setErrors({ notSame: true });
     } else {
       matchingControl.setErrors(null);
     }

@@ -19,6 +19,10 @@ const User = sequelize.define('User', {
     type: DataTypes.CHAR(120),
     unique:true,
     allowNull:false
+  },
+  password: {
+    type: DataTypes.CHAR(80),
+    allowNull:false
   }
 },{
   timestamps: false,

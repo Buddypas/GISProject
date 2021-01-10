@@ -3,6 +3,7 @@ const mySequelize = require("./shared/my-sequelize");
 const bodyParser = require("body-parser");
 
 const locationRoutes = require("./routes/locations");
+const authRoutes = require("./routes/auth");
 const app = express();
 
 app.use(bodyParser.json());
@@ -24,5 +25,6 @@ app.use((req, res, next) => {
 
 // forward only requests starting with first argument to the locationRoutes
 app.use("/api/locations", locationRoutes);
+app.use("/api/auth", authRoutes);
 
 module.exports = app;

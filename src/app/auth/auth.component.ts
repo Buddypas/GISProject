@@ -1,9 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from '../auth.service';
 import { checkPasswordMatch } from '../utils/utils';
 
 @Component({
@@ -13,6 +11,13 @@ import { checkPasswordMatch } from '../utils/utils';
 })
 export class AuthComponent implements OnInit {
   isLoginMode = true;
+
+  constructor(
+    private http: HttpClient,
+    private fb: FormBuilder,
+    private authService: AuthService
+  ) {}
+
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: [
@@ -44,8 +49,6 @@ export class AuthComponent implements OnInit {
     },
     { validator: checkPasswordMatch('password', 'confirmPassword') }
   );
-
-  constructor(private http: HttpClient, private fb: FormBuilder) {}
 
   ngOnInit(): void {}
 
@@ -112,7 +115,18 @@ export class AuthComponent implements OnInit {
   }
 
   onRegister() {
-    console.log(this.signupForm.value);
+    const data = {
+      email: this.signupForm.get('email').value,
+      username: this.signupForm.get('username').value,
+      password: this.signupForm.get('password').value,
+    };
+    this.authService.createAccount(data).subscribe((result: {message: string,result:any}) => {
+      console.log(result);
+      if(result.message == "success") {
+        alert("User created!");
+        this.isLoginMode = true;
+      }
+    })
   }
 
   onRegisterClicked() {

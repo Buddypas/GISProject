@@ -1,18 +1,6 @@
 const express = require("express");
-// const { Client } = require("pg");
 const Location = require("../models/location");
-// const sequelize = require("../shared/my-sequelize");
 const router = express.Router();
-
-// const client = new Client({
-//   user: "postgres",
-//   host: "localhost",
-//   database: "gis_db",
-//   password: "postgres",
-//   port: 5432,
-// });
-// client.connect();
-
 /**
  * Get all locations
  */
