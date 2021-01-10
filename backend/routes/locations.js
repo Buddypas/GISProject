@@ -31,15 +31,6 @@ router.get("", (req, res) => {
         message: err,
       });
     });
-
-  // client.query("SELECT * FROM locations").then((result) => {
-  //   results = result.rows;
-  //   console.log(results);
-  //   res.status(200).json({
-  //     message: "success",
-  //     results: results,
-  //   });
-  // });
 });
 
 /**
@@ -47,50 +38,25 @@ router.get("", (req, res) => {
  */
 router.post("/add", (req, res) => {
   console.log("create location called");
-  const newLocation = Location.create({
+  Location.create({
     name: req.body.name,
     longitude: req.body.longitude,
-    latitude:req.body.latitude,
-    description:req.body.description,
-    category:req.body.category,
-    creator_id:3
-  }).then(result => {
-    console.log("save result: " + result);
-    res.status(200).json({
-      message: "success"
-    });
+    latitude: req.body.latitude,
+    description: req.body.description,
+    category: req.body.category,
+    creator_id: 3,
   })
-  .catch(err=>{
-    res.status(500).json({
-      message: err
+    .then((result) => {
+      console.log("save result: " + result);
+      res.status(200).json({
+        message: "success",
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        message: err,
+      });
     });
-  });
-
-  // const queryText =
-  //   "INSERT INTO locations(longitude,latitude,name,description,category_id,creator_id) VALUES ($1,$2,$3,$4,$5,$6)";
-  // const queryValues = [
-  //   req.body.longitude,
-  //   req.body.latitude,
-  //   req.body.name,
-  //   req.body.description,
-  //   req.body.category,
-  //   2,
-  // ];
-  // let msg = null;
-  // client
-  //   .query(queryText, queryValues)
-  //   .then((result) => {
-  //     msg = result.rows[0];
-  //     res.status(200).json({
-  //       message: msg,
-  //     });
-  //   })
-  //   .catch((e) => {
-  //     msg = console.error(e.stack);
-  //     res.status(500).json({
-  //       message: msg,
-  //     });
-  //   });
 });
 
 /**
@@ -100,41 +66,41 @@ router.post("/rate", (req, res) => {
   console.log("rate location called");
   const locationId = req.body.id;
   console.log("locationId: " + locationId);
-  const getLocationQueryText = "SELECT * FROM locations WHERE id = $1";
-  const getLocationQueryValues = [locationId];
-  client
-    .query(getLocationQueryText, getLocationQueryValues)
-    .then((result) => {
-      const targetLocation = result.rows[0];
-      console.log("rated location: " + targetLocation);
-      const oldRating = targetLocation.rating;
-      const oldVoteCount = targetLocation.vote_count;
-      const newVoteCount = oldVoteCount + 1;
-      const newRating = (oldRating + req.body.rating) / newVoteCount;
-      // TODO: Round new rating with 0.5 steps
-      const updateQueryText =
-        "UPDATE locations SET rating=$1, vote_count=$2 WHERE id=$3";
-      const updateQueryValues = [newRating, newVoteCount, locationId];
-      client
-        .query(updateQueryText, updateQueryValues)
-        .then(() => {
-          res.status(200).json({
-            message: "success",
-          });
-        })
-        .catch((e) => {
-          msg = console.error(e.stack);
-          res.status(500).json({
-            message: msg,
-          });
+  Location.findOne({
+    attributes: ["id", "name", "rating", "vote_count"],
+    where: {
+      id: locationId,
+    },
+  }).then((location) => {
+    console.log("location to be rated: " + location);
+    const oldRating = location.rating;
+    const oldVoteCount = location.vote_count;
+    const newVoteCount = oldVoteCount + 1;
+    const newRating = (oldRating + req.body.rating) / newVoteCount;
+    // TODO: Round new rating with 0.5 steps
+    Location.update(
+      {
+        rating: newRating,
+        vote_count: newVoteCount,
+      },
+      {
+        where: {
+          id: locationId,
+        },
+      }
+    )
+      .then(() => {
+        res.status(200).json({
+          message: "success",
         });
-    })
-    .catch((e) => {
-      msg = console.error(e.stack);
-      res.status(500).json({
-        message: msg,
+      })
+      .catch((err) => {
+        msg = console.error(err.stack);
+        res.status(500).json({
+          message: msg,
+        });
       });
-    });
+  });
 });
 
 module.exports = router;
