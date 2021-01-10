@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { MapService } from '../map.service';
+import { MapService } from '../services/map.service';
 import { Location } from '../models/location.model';
 
 @Component({

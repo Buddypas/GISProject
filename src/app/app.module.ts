@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -31,6 +31,7 @@ import { InfoContainerComponent } from './info-container/info-container.componen
 import { LocationComponent } from './locations/location/location.component';
 import { AuthComponent } from './auth/auth.component';
 import { MainComponent } from './main/main.component';
+import { AuthInterceptorService } from './services/token-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,11 @@ import { MainComponent } from './main/main.component';
     MatProgressSpinnerModule,
     MatIconModule,
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptorService,
+    multi: true
+  }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

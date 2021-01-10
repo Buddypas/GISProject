@@ -10,7 +10,11 @@ const routes: Routes = [
   },
   {
     component: MainComponent,
-    path: '',
+    path: 'map',
+  },
+  {
+    path: '**',
+    redirectTo:'/map'
   },
 ];
 

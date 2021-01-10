@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import mapboxgl from 'mapbox-gl';
 import { Subscription } from 'rxjs';
 import { AddLocationSheetComponent } from '../locations/add-location/add-location-sheet.component';
-import { MapService } from '../map.service';
+import { MapService } from '../services/map.service';
 import { Location } from '../models/location.model';
 import { GeoJson } from '../models/map';
 import { CATEGORY_ICON_MAP } from '../constants';
@@ -124,12 +124,15 @@ export class MapComponent implements OnInit {
               this._snackBar.open('Location added!', 'Close', {
                 duration: 2500,
               });
-            this.locations = [...this.mapService.currentLocations];
-            this.loadMarkers();
+              if(this.locations !== this.mapService.currentLocations) {
+                console.log("locations drawn!");
+                this.locations = [...this.mapService.currentLocations];
+                this.loadMarkers();
+              }
           }
         }
       );
-      this.mapService.getMarkers();
+      setInterval(() => this.mapService.getMarkers(),5000);
     });
   }
 

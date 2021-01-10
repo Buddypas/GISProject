@@ -1,7 +1,7 @@
 import { Component, Inject,OnInit } from '@angular/core';
 import { MatBottomSheetRef,MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { Subscription } from 'rxjs';
-import { MapService } from 'src/app/map.service';
+import { MapService } from 'src/app/services/map.service';
 
 import { Location } from '../../models/location.model';
 

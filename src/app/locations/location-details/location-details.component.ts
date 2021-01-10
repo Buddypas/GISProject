@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { MapService } from 'src/app/map.service';
+import { MapService } from 'src/app/services/map.service';
 import { Location } from 'src/app/models/location.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-location-details',
@@ -25,7 +26,11 @@ export class LocationDetailsComponent implements OnInit,OnDestroy {
   onRateClicked() {
     // console.log(this.rating);
     this.mapService.rateLocation(this.location.id,this.rating.value).subscribe((result) => {
-      console.log(result.message);
+      alert(result.message);
+    },
+    (err:HttpErrorResponse) => {
+      // console.log(err.error);
+      alert(err.error.error);
     });
   }
 

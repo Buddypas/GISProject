@@ -5,8 +5,9 @@ import { map } from 'rxjs/operators';
 import mapboxgl from 'mapbox-gl';
 import { environment } from 'src/environments/environment';
 import { Observable, Subject } from 'rxjs';
-import { Location } from './models/location.model';
-import { CATEGORY_ICON_MAP } from './constants';
+import { Location } from '../models/location.model';
+import { CATEGORY_ICON_MAP } from '../constants';
+import { areArraysEqual } from '../utils/utils';
 
 @Injectable({
   providedIn: 'root',
@@ -54,9 +55,11 @@ export class MapService {
         })
       )
       .subscribe((locationsData) => {
-        console.log(locationsData);
-        this.currentLocations = locationsData;
-        this.locationsUpdated.next(true);
+        // console.log(locationsData);
+        if(!areArraysEqual(this.currentLocations,locationsData)) {
+          this.currentLocations = locationsData;
+          this.locationsUpdated.next(true);
+        }
       });
   }
 

@@ -3,8 +3,8 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.4.
 
 ## TODO
-- Add proper login form validation and styling
-- Add login route and sessions
+- Add navigation with map and login/logout items
+- Add rate validation
 - Rate locations with stars
 - Try adding classes for feature collections, features etc.
 

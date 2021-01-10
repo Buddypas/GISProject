@@ -29,7 +29,8 @@ router.post("/login", (req, res) => {
               });
 
               res.status(200).json({
-                message:"Login successful!",
+                userId:user.dataValues.id,
+                username:user.dataValues.username.trim(),
                 token:token
               });
             }
@@ -41,14 +42,13 @@ router.post("/login", (req, res) => {
             console.log("error comparing passwords");
             console.log(err);
             res.status(500).json({
-              message: err,
+              error: err,
             });
           });
       }
       else res.status(404).json({
         error: "User not found!",
       });
-
     })
     .catch((err) => {
       console.log("error finding user");

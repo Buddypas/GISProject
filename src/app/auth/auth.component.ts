@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 import { checkPasswordMatch } from '../utils/utils';
 
 @Component({
@@ -15,7 +16,8 @@ export class AuthComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private fb: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private router:Router
   ) {}
 
   loginForm = this.fb.group({
@@ -52,8 +54,6 @@ export class AuthComponent implements OnInit {
 
   ngOnInit(): void {}
 
-
-
   onLogin() {
     console.log(this.loginForm.value);
     const data = {
@@ -61,14 +61,22 @@ export class AuthComponent implements OnInit {
       password: this.loginForm.get('password').value,
     };
 
-    this.authService.login(data).subscribe((result:any) => {
-      console.log(result);
-      if(result.message == "success") {
-        alert("Logged in!");
-        console.log(result.token);
-        console.log(result.error);
+    this.authService.login(data).subscribe(
+      (result: any) => {
+        console.log('login result: ');
+        console.log('login result: ' + result);
+        if (result.error) {
+          alert('Error: ' + result.error);
+        } else {
+          alert('Logged in!');
+          this.router.navigate([''])
+          console.log(result.token);
+        }
+      },
+      (errResponse: HttpErrorResponse) => {
+        alert(errResponse.error.error)
       }
-    })
+    );
   }
 
   onRegister() {
@@ -77,13 +85,15 @@ export class AuthComponent implements OnInit {
       username: this.signupForm.get('username').value,
       password: this.signupForm.get('password').value,
     };
-    this.authService.createAccount(data).subscribe((result: {message: string,result:any}) => {
-      console.log(result);
-      if(result.message == "success") {
-        alert("User created!");
-        this.isLoginMode = true;
-      }
-    })
+    this.authService
+      .createAccount(data)
+      .subscribe((result: { message: string; result: any }) => {
+        console.log(result);
+        if (result.message == 'success') {
+          alert('User created!');
+          this.isLoginMode = true;
+        }
+      });
   }
 
   onRegisterClicked() {
