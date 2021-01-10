@@ -1,8 +1,7 @@
 const express = require("express");
 const User = require("../models/user");
-const passport = require("passport");
-const localStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const router = express.Router();
 
@@ -16,20 +15,40 @@ router.post("/login", (req, res) => {
     where: { email: req.body.email },
   })
     .then((user) => {
-      console.log(user);
-      bcrypt
-        .compare(req.body.password, user.password)
-        .then((matches) => {
-          if (matches) {
-          }
-        })
-        .catch((err) => {
-          console.log("error comparing passwords");
-          console.log(err);
-          res.status(500).json({
-            message: err,
+      if(user != null) {
+        console.log(user.dataValues);
+        bcrypt
+          .compare(req.body.password, user.password)
+          .then((matches) => {
+            if (matches) {
+              const token = jwt.sign({
+                email:user.dataValues.email,
+                userId:user.dataValues.id
+              },'jwtSecretKey',{
+                expiresIn:"1h"
+              });
+
+              res.status(200).json({
+                message:"Login successful!",
+                token:token
+              });
+            }
+            else res.status(401).json({
+              error: "Invalid credentials!",
+            });
+          })
+          .catch((err) => {
+            console.log("error comparing passwords");
+            console.log(err);
+            res.status(500).json({
+              message: err,
+            });
           });
-        });
+      }
+      else res.status(404).json({
+        error: "User not found!",
+      });
+
     })
     .catch((err) => {
       console.log("error finding user");
@@ -82,7 +101,7 @@ router.post("/register", (req, res) => {
             });
           });
       } else
-        res.status(403).json({
+        res.status(409).json({
           error: "A user with the given email address already exists!",
         });
     })

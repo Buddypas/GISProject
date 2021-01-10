@@ -1,6 +1,7 @@
 const express = require("express");
 const Location = require("../models/location");
 const router = express.Router();
+const checkAuth = require("../shared/check-auth");
 /**
  * Get all locations
  */
@@ -24,7 +25,7 @@ router.get("", (req, res) => {
 /**
  * Create new location with fixed user id
  */
-router.post("/add", (req, res) => {
+router.post("/add", checkAuth, (req, res) => {
   console.log("create location called");
   Location.create({
     name: req.body.name,
@@ -50,7 +51,7 @@ router.post("/add", (req, res) => {
 /**
  * Rate location
  */
-router.post("/rate", (req, res) => {
+router.post("/rate",checkAuth, (req, res) => {
   console.log("rate location called");
   const locationId = req.body.id;
   console.log("locationId: " + locationId);

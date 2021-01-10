@@ -52,6 +52,44 @@ export class AuthComponent implements OnInit {
 
   ngOnInit(): void {}
 
+
+
+  onLogin() {
+    console.log(this.loginForm.value);
+    const data = {
+      email: this.loginForm.get('email').value,
+      password: this.loginForm.get('password').value,
+    };
+
+    this.authService.login(data).subscribe((result:any) => {
+      console.log(result);
+      if(result.message == "success") {
+        alert("Logged in!");
+        console.log(result.token);
+        console.log(result.error);
+      }
+    })
+  }
+
+  onRegister() {
+    const data = {
+      email: this.signupForm.get('email').value,
+      username: this.signupForm.get('username').value,
+      password: this.signupForm.get('password').value,
+    };
+    this.authService.createAccount(data).subscribe((result: {message: string,result:any}) => {
+      console.log(result);
+      if(result.message == "success") {
+        alert("User created!");
+        this.isLoginMode = true;
+      }
+    })
+  }
+
+  onRegisterClicked() {
+    this.isLoginMode = !this.isLoginMode;
+  }
+
   getErrorMessage(formType: string, type: string): string {
     if (formType == 'login') {
       switch (type) {
@@ -108,28 +146,5 @@ export class AuthComponent implements OnInit {
             : null;
         }
       }
-  }
-
-  onLogin() {
-    console.log(this.loginForm.value);
-  }
-
-  onRegister() {
-    const data = {
-      email: this.signupForm.get('email').value,
-      username: this.signupForm.get('username').value,
-      password: this.signupForm.get('password').value,
-    };
-    this.authService.createAccount(data).subscribe((result: {message: string,result:any}) => {
-      console.log(result);
-      if(result.message == "success") {
-        alert("User created!");
-        this.isLoginMode = true;
-      }
-    })
-  }
-
-  onRegisterClicked() {
-    this.isLoginMode = !this.isLoginMode;
   }
 }
