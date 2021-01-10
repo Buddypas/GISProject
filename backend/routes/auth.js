@@ -1,15 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const { Client } = require("pg");
+// const { Client } = require("pg");
 
-const client = new Client({
-  user: "postgres",
-  host: "localhost",
-  database: "gis_db",
-  password: "postgres",
-  port: 5432,
-});
-client.connect();
+// const client = new Client({
+//   user: "postgres",
+//   host: "localhost",
+//   database: "gis_db",
+//   password: "postgres",
+//   port: 5432,
+// });
+// client.connect();
 
 /**
  * Authenticate
