@@ -1,0 +1,27 @@
+<p>
+  <mat-toolbar>
+    <span>mApp</span>
+    <span class="example-spacer"></span>
+    <a routerLink="/map" routerLinkActive="active" style="color: inherit;">
+      <button mat-icon-button class="example-icon layers-icon" aria-label="Example icon-button with heart icon">
+        <mat-icon>layers</mat-icon>
+      </button>
+    </a>
+
+    <button mat-icon-button class="example-icon" [matMenuTriggerFor]="menu" aria-label="Example icon-button with share icon"
+      *ngIf="isLoggedIn; else loggedOut">
+      <mat-icon>person</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="onLogout()">Logout</button>
+    </mat-menu>
+
+    <ng-template #loggedOut>
+      <a routerLink="/auth" routerLinkActive="active" style="color: inherit;">
+        <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+          <mat-icon>login</mat-icon>
+        </button>
+      </a>
+    </ng-template>
+  </mat-toolbar>
+</p>

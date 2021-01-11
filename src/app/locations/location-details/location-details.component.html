@@ -11,19 +11,22 @@
   <mat-card-content>
     <p class="location-description mat-h3">{{location.description}}</p>
     <form>
-      <div style="height: 100%; display: flex; justify-content:flex-start; align-items: baseline;">
+      <div class="form-container">
         <div>
           <mat-form-field appearance="outline">
             <mat-label>Rate location:</mat-label>
             <input matInput type="number" [formControl]="rating">
+            <mat-error *ngIf="rating.invalid">{{getErrorMessage()}}</mat-error>
           </mat-form-field>
         </div>
         <div>
-          <button mat-raised-button [disabled]="rating.dirty && !rating.valid"
-          (click)="onRateClicked()">Rate</button>
+          <button mat-raised-button [disabled]="!rating.valid" (click)="onRateClicked()">Rate</button>
         </div>
-
+        <!-- *ngIf="authService.userData.value.userId == location.creatorId" -->
       </div>
     </form>
+    <div *ngIf="authService.userData.value.userId == location.creatorId">
+      <button mat-raised-button (click)="onDeleteClicked()" color="warn">Delete</button>
+    </div>
   </mat-card-content>
 </mat-card>

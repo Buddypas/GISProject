@@ -9,7 +9,7 @@ router.get("", (req, res) => {
   console.log("get called");
   Location.findAll()
     .then((locations) => {
-      console.log("locations: " + locations);
+      // console.log("locations: " + locations);
       res.status(200).json({
         message: "success",
         results: locations,
@@ -17,7 +17,7 @@ router.get("", (req, res) => {
     })
     .catch((err) => {
       res.status(500).json({
-        message: err,
+        error: err,
       });
     });
 });
@@ -33,7 +33,7 @@ router.post("/add", checkAuth, (req, res) => {
     latitude: req.body.latitude,
     description: req.body.description,
     category: req.body.category,
-    creator_id: 3,
+    creator_id: req.body.userId,
   })
     .then((result) => {
       console.log("save result: " + result);
@@ -47,6 +47,31 @@ router.post("/add", checkAuth, (req, res) => {
       });
     });
 });
+
+/**
+ * Delete location
+ */
+router.post("/:locationId/delete",(req,res) => {
+  const locId = req.params.locationId;
+  Location.destroy({
+    where:{
+      id:locId
+    }
+  }).then(result => {
+    if(result > 0) res.status(200).json({
+      message: "Deletion successful!"
+    });
+    else res.status(404).json({
+      message: "No such location found!"
+    });
+  })
+  .catch((err) => {
+    msg = console.error(err.stack);
+    res.status(500).json({
+      message: msg,
+    });
+  });
+})
 
 /**
  * Rate location

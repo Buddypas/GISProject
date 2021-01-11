@@ -17,7 +17,7 @@ export class AuthComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private authService: AuthService,
-    private router:Router
+    private router: Router
   ) {}
 
   loginForm = this.fb.group({
@@ -65,16 +65,12 @@ export class AuthComponent implements OnInit {
       (result: any) => {
         console.log('login result: ');
         console.log('login result: ' + result);
-        if (result.error) {
-          alert('Error: ' + result.error);
-        } else {
-          alert('Logged in!');
-          this.router.navigate([''])
-          console.log(result.token);
-        }
+        // alert('Logged in!');
+        console.log(result.token);
+        this.router.navigate(['/map']);
       },
       (errResponse: HttpErrorResponse) => {
-        alert(errResponse.error.error)
+        alert(errResponse.error.error);
       }
     );
   }

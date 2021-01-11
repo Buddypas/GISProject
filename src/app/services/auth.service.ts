@@ -39,6 +39,7 @@ export class AuthService {
     const data: AuthResponseData = JSON.parse(
       localStorage.getItem('userData')
     );
+    console.log("auto login parsed data: " + data);
     if (!data) return;
 
     const currentUserData: AuthResponseData = {
@@ -53,8 +54,8 @@ export class AuthService {
 
   private handleAuthentication(data: AuthResponseData) {
     // const expirationMillis = Date.now() + 1000 * 60 * 60;
-    this.userData.next(data);
     localStorage.setItem('userData', JSON.stringify(data));
+    this.userData.next(data);
   }
 
   private handleError(errorRes: HttpErrorResponse) {

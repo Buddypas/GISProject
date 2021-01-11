@@ -132,11 +132,13 @@ export class MapComponent implements OnInit {
           }
         }
       );
-      setInterval(() => this.mapService.getMarkers(),5000);
+      // setInterval(() => this.mapService.getMarkers(),5000);
+      this.mapService.getMarkers();
     });
   }
 
   private loadMarkers() {
+    this.features.length = 0;
     this.locations.forEach((loc) => {
       let feature = {
         type: 'Feature',

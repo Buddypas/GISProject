@@ -34,23 +34,25 @@ export class MapService {
       )
       .pipe(
         map((data) => {
-          console.log("locations from map service before pipe: " + data.results[0].category);
+          console.log("locations from map service before pipe: " + data.results[0].creator_id);
           return data.results.map((location) => {
             const newName = location.name.trim();
             let newDesc: string | null;
             if (location.description != null)
               newDesc = location.description.trim();
             else newDesc = null;
-
-            return new Location(
+            const newLocation = new Location(
               location.longitude,
               location.latitude,
               newName,
               location.category,
               newDesc,
               location.id,
+              location.creator_id,
               location.rating
             );
+            console.log(newLocation);
+            return newLocation;
           });
         })
       )
@@ -67,13 +69,18 @@ export class MapService {
     return this.http.post('http://localhost:3000/api/locations/rate', {
       id: id,
       rating: rating,
-    },{
-      headers:{"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pZHpvODFAaG90bWFpbC5jb20gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIiwidXNlcklkIjo0LCJpYXQiOjE2MTAzMTYzMTAsImV4cCI6MTYxMDMxOTkxMH0.8DbjUL4_BqhyTGr-2ARCpuD-N8x-MxA4jDdC8nmMimk"}
     });
   }
 
-  addLocation(location: Location): Observable<any> {
-    return this.http.post('http://localhost:3000/api/locations/add', location);
+  deleteLocation(locationId:number) {
+    return this.http.post('http://localhost:3000/api/locations/' + locationId + '/delete',null);
+  }
+
+  addLocation(userId:number, location: Location): Observable<any> {
+    const idObj = {userId: userId};
+    const data = {...idObj,...location};
+    console.log(data);
+    return this.http.post('http://localhost:3000/api/locations/add', data);
   }
 
   updateLocation(loc: Location | null) {

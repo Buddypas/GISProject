@@ -20,6 +20,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatMenu, MatMenuModule } from '@angular/material/menu';
 
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
@@ -32,6 +34,7 @@ import { LocationComponent } from './locations/location/location.component';
 import { AuthComponent } from './auth/auth.component';
 import { MainComponent } from './main/main.component';
 import { AuthInterceptorService } from './services/token-interceptor.service';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +47,7 @@ import { AuthInterceptorService } from './services/token-interceptor.service';
     LocationComponent,
     AuthComponent,
     MainComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,12 +69,16 @@ import { AuthInterceptorService } from './services/token-interceptor.service';
     MatExpansionModule,
     MatProgressSpinnerModule,
     MatIconModule,
+    MatToolbarModule,
+    MatMenuModule,
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptorService,
-    multi: true
-  }],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

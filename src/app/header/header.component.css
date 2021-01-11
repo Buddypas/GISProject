@@ -1,0 +1,7 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.active {
+  background-color: rgba(92, 85, 85, 0.466);
+}

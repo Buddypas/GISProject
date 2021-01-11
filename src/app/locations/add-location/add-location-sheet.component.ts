@@ -1,6 +1,7 @@
 import { Component, Inject,OnInit } from '@angular/core';
 import { MatBottomSheetRef,MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 import { MapService } from 'src/app/services/map.service';
 
 import { Location } from '../../models/location.model';
@@ -18,7 +19,8 @@ export class AddLocationSheetComponent implements OnInit {
   constructor(
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: {lng:number,lat:number},
     private bottomSheetRef: MatBottomSheetRef<AddLocationSheetComponent>,
-    private mapService:MapService
+    private mapService:MapService,
+    private authService:AuthService
   ) {}
 
   ngOnInit(): void {
@@ -27,10 +29,10 @@ export class AddLocationSheetComponent implements OnInit {
 
   onSubmit() {
     console.log(this.location);
-    this.mapService.addLocation(this.location).subscribe(response => {
+    this.mapService.addLocation(this.authService.userData.value.userId,this.location).subscribe(response => {
       console.log("response from sheet: " + response);
-      this.mapService.currentLocations.push(this.location);
-      this.mapService.locationsUpdated.next(true);
+      this.mapService.getMarkers();
+      // this.mapService.locationsUpdated.next(true);
       this.bottomSheetRef.dismiss();
     })
   }

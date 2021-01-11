@@ -3,9 +3,9 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.4.
 
 ## TODO
-- Add navigation with map and login/logout items
-- Add rate validation
-- Rate locations with stars
+- Handle token expiration
+- Add empty star for unrated locations
+- Add delete location
 - Try adding classes for feature collections, features etc.
 
 ## Development server
