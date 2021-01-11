@@ -4,8 +4,6 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## TODO
 - Handle token expiration
-- Add empty star for unrated locations
-- Add delete location
 - Try adding classes for feature collections, features etc.
 
 ## Development server
