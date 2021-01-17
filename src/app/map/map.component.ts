@@ -137,6 +137,7 @@ export class MapComponent implements OnInit {
     });
   }
 
+
   private loadMarkers() {
     this.features.length = 0;
     this.locations.forEach((loc) => {
