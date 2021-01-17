@@ -88,10 +88,15 @@ router.post("/rate",checkAuth, (req, res) => {
   }).then((location) => {
     console.log("location to be rated: " + location);
     const oldRating = location.rating;
+    console.log("oldRating: " + oldRating);
     const oldVoteCount = location.vote_count;
+    console.log("oldVoteCount: " + oldVoteCount);
     const newVoteCount = oldVoteCount + 1;
-    const newRating = (oldRating + req.body.rating) / newVoteCount;
-    // TODO: Round new rating with 0.5 steps
+    console.log("newVoteCount: " + newVoteCount);
+    let newRating = (oldRating + req.body.rating) / newVoteCount;
+    console.log("newRating before rounding: " + newVoteCount);
+    if(Math.trunc(newRating) != newRating) newRating = Math.trunc(newRating) + 0.5;
+    console.log("newRating after rounding: " + newRating);
     Location.update(
       {
         rating: newRating,

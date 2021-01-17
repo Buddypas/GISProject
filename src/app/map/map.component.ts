@@ -132,8 +132,8 @@ export class MapComponent implements OnInit {
           }
         }
       );
-      // setInterval(() => this.mapService.getMarkers(),5000);
-      this.mapService.getMarkers();
+      setInterval(() => this.mapService.getMarkers(),3000);
+      // this.mapService.getMarkers();
     });
   }
 

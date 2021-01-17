@@ -3,8 +3,6 @@
     <h1 class="location-name mat-display-1">{{location.name}}</h1>
   </mat-card-title>
   <mat-card-subtitle>
-
-
     <div *ngIf="location.rating > 0; else noRating">
       <mat-icon aria-hidden="false" aria-label="Example star icon">grade</mat-icon>
       <p class="mat-h2">{{location.rating}}</p>

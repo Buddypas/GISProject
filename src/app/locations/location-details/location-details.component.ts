@@ -57,9 +57,11 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
     console.log(this.rating);
     this.mapService.rateLocation(this.location.id, this.rating.value).subscribe(
       (result) => {
+        this.rating.reset();
         this._snackBar.open('Location rated!', 'Close', {
           duration: 2500,
         });
+        this.mapService.getMarkers();
       },
       (err: HttpErrorResponse) => {
         // console.log(err.error);

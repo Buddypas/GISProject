@@ -34,7 +34,7 @@ export class MapService {
       )
       .pipe(
         map((data) => {
-          console.log("locations from map service before pipe: " + data.results[0].creator_id);
+          // console.log("locations from map service before pipe: " + data.results[0].creator_id);
           return data.results.map((location) => {
             const newName = location.name.trim();
             let newDesc: string | null;

@@ -27,11 +27,14 @@ router.post("/login", (req, res) => {
               },'jwtSecretKey',{
                 expiresIn:"1h"
               });
+              const expirationDate = new Date();
+              expirationDate.setMilliseconds(expirationDate.getMilliseconds() + 60*60*1000);
 
               res.status(200).json({
                 userId:user.dataValues.id,
                 username:user.dataValues.username.trim(),
-                token:token
+                token:token,
+                expirationMillis:expirationDate
               });
             }
             else res.status(401).json({
@@ -90,7 +93,7 @@ router.post("/register", (req, res) => {
                 console.log("error creating user");
                 console.log(err);
                 res.status(500).json({
-                  message: err,
+                  error: err,
                 });
               });
           })

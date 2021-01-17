@@ -8,6 +8,7 @@ export interface AuthResponseData {
   userId: number;
   username: string;
   token: string;
+  expirationMillis: number;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -36,20 +37,18 @@ export class AuthService {
   }
 
   autoLogin() {
-    const data: AuthResponseData = JSON.parse(
-      localStorage.getItem('userData')
-    );
-    console.log("auto login parsed data: " + data);
-    if (!data) return;
+    const data: AuthResponseData = JSON.parse(localStorage.getItem('userData'));
+    console.log('auto login parsed data: ' + data);
+    if (!data || data.expirationMillis < new Date().getMilliseconds()) return;
 
     const currentUserData: AuthResponseData = {
       userId: data.userId,
       token: data.token,
       username: data.username,
+      expirationMillis: data.expirationMillis,
     };
 
     this.userData.next(currentUserData);
-
   }
 
   private handleAuthentication(data: AuthResponseData) {

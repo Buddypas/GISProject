@@ -83,12 +83,14 @@ export class AuthComponent implements OnInit {
     };
     this.authService
       .createAccount(data)
-      .subscribe((result: { message: string; result: any }) => {
+      .subscribe((result:any) => {
         console.log(result);
         if (result.message == 'success') {
           alert('User created!');
           this.isLoginMode = true;
         }
+      }, (err) => {
+        alert(err.error.error);
       });
   }
 
