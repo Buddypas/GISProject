@@ -6,7 +6,7 @@ import mapboxgl from 'mapbox-gl';
 import { environment } from 'src/environments/environment';
 import { Observable, Subject } from 'rxjs';
 import { Location } from '../models/location.model';
-import { CATEGORY_ICON_MAP } from '../constants';
+import { BASE_URL, CATEGORY_ICON_MAP } from '../constants';
 import { areArraysEqual } from '../utils/utils';
 
 @Injectable({
@@ -30,7 +30,7 @@ export class MapService {
   getMarkers() {
     this.http
       .get<{ message: String; results: any[] }>(
-        'http://localhost:3000/api/locations'
+        BASE_URL + 'api/locations'
       )
       .pipe(
         map((data) => {
@@ -66,21 +66,21 @@ export class MapService {
   }
 
   rateLocation(id: number, rating: number): Observable<any> {
-    return this.http.post('http://localhost:3000/api/locations/rate', {
+    return this.http.post(BASE_URL + 'api/locations/rate', {
       id: id,
       rating: rating,
     });
   }
 
   deleteLocation(locationId:number) {
-    return this.http.post('http://localhost:3000/api/locations/' + locationId + '/delete',null);
+    return this.http.post(BASE_URL + 'api/locations/' + locationId + '/delete',null);
   }
 
   addLocation(userId:number, location: Location): Observable<any> {
     const idObj = {userId: userId};
     const data = {...idObj,...location};
     console.log(data);
-    return this.http.post('http://localhost:3000/api/locations/add', data);
+    return this.http.post(BASE_URL + 'api/locations/add', data);
   }
 
   updateLocation(loc: Location | null) {

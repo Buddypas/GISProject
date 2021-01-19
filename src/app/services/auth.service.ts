@@ -2,7 +2,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
+import { BASE_URL } from '../constants';
 
 export interface AuthResponseData {
   userId: number;
@@ -17,12 +18,12 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
 
   createAccount(data: { email: string; username: string; password: string }) {
-    return this.http.post('http://localhost:3000/api/auth/register', data);
+    return this.http.post(BASE_URL + 'api/auth/register', data);
   }
 
   login(data: { email: string; password: string }) {
     return this.http
-      .post<AuthResponseData>('http://localhost:3000/api/auth/login', data)
+      .post<AuthResponseData>(BASE_URL + 'api/auth/login', data)
       .pipe(
         // catchError(this.handleError),
         tap((resData) => {
