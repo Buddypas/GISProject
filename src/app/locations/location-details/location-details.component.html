@@ -16,7 +16,7 @@
   </mat-card-subtitle>
   <mat-card-content>
     <p class="location-description mat-h3">{{location.description}}</p>
-    <form>
+    <form *ngIf="authService.isLoggedIn()">
       <div class="form-container">
         <div>
           <mat-form-field appearance="outline">

@@ -21,6 +21,10 @@ export class AuthService {
     return this.http.post(BASE_URL + 'api/auth/register', data);
   }
 
+  isLoggedIn(): boolean {
+    return this.userData.value != null;
+  }
+
   login(data: { email: string; password: string }) {
     return this.http
       .post<AuthResponseData>(BASE_URL + 'api/auth/login', data)
@@ -39,7 +43,6 @@ export class AuthService {
 
   autoLogin() {
     const data: AuthResponseData = JSON.parse(localStorage.getItem('userData'));
-    console.log('auto login parsed data: ' + data);
     if (!data || data.expirationMillis < new Date().getMilliseconds()) return;
 
     const currentUserData: AuthResponseData = {

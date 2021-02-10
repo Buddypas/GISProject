@@ -28,9 +28,8 @@ export class AddLocationSheetComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.location);
+
     this.mapService.addLocation(this.authService.userData.value.userId,this.location).subscribe(response => {
-      console.log("response from sheet: " + response);
       this.mapService.getMarkers();
       // this.mapService.locationsUpdated.next(true);
       this.bottomSheetRef.dismiss();

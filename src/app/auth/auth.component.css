@@ -22,3 +22,7 @@ mat-form-field {
 p.mat-body {
   margin-top:15px;
 }
+
+p.mat-body strong:hover {
+  cursor: pointer;
+}

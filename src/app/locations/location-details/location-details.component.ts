@@ -35,11 +35,8 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
   }
 
   onDeleteClicked() {
-    console.log('my id: ' + this.authService.userData.value.userId);
-    console.log('creator id: ' + this.location.creatorId);
     this.mapService.deleteLocation(this.location.id).subscribe(
       (result) => {
-        console.log(result);
         this._snackBar.open('Location deleted!', 'Close', {
           duration: 2500,
         });
@@ -54,7 +51,6 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
   }
 
   onRateClicked() {
-    console.log(this.rating);
     this.mapService.rateLocation(this.location.id, this.rating.value).subscribe(
       (result) => {
         this.rating.reset();

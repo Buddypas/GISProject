@@ -55,7 +55,7 @@ export class AuthComponent implements OnInit {
   ngOnInit(): void {}
 
   onLogin() {
-    console.log(this.loginForm.value);
+    // console.log(this.loginForm.value);
     const data = {
       email: this.loginForm.get('email').value,
       password: this.loginForm.get('password').value,
@@ -63,10 +63,10 @@ export class AuthComponent implements OnInit {
 
     this.authService.login(data).subscribe(
       (result: any) => {
-        console.log('login result: ');
-        console.log('login result: ' + result);
+        // console.log('login result: ');
+        // console.log('login result: ' + result);
         // alert('Logged in!');
-        console.log(result.token);
+        // console.log(result.token);
         this.router.navigate(['/map']);
       },
       (errResponse: HttpErrorResponse) => {
@@ -81,17 +81,15 @@ export class AuthComponent implements OnInit {
       username: this.signupForm.get('username').value,
       password: this.signupForm.get('password').value,
     };
-    this.authService
-      .createAccount(data)
-      .subscribe((result:any) => {
-        console.log(result);
-        if (result.message == 'success') {
-          alert('User created!');
-          this.isLoginMode = true;
-        }
-      }, (err) => {
+    this.authService.createAccount(data).subscribe(
+      (result: any) => {
+        alert('User created!');
+        this.isLoginMode = true;
+      },
+      (err) => {
         alert(err.error.error);
-      });
+      }
+    );
   }
 
   onRegisterClicked() {

@@ -110,7 +110,6 @@ export class MapComponent implements OnInit {
         const coordinates = [event.lngLat.lng, event.lngLat.lat];
         this.lng = coordinates[0];
         this.lat = coordinates[1];
-        console.log('lng: ' + this.lng + ', lat: ' + this.lat);
         this.openBottomSheet();
       });
 
@@ -125,7 +124,6 @@ export class MapComponent implements OnInit {
                 duration: 2500,
               });
               if(this.locations !== this.mapService.currentLocations) {
-                console.log("locations drawn!");
                 this.locations = [...this.mapService.currentLocations];
                 this.loadMarkers();
               }

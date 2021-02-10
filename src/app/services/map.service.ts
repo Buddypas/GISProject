@@ -51,7 +51,6 @@ export class MapService {
               location.creator_id,
               location.rating
             );
-            console.log(newLocation);
             return newLocation;
           });
         })
@@ -79,7 +78,6 @@ export class MapService {
   addLocation(userId:number, location: Location): Observable<any> {
     const idObj = {userId: userId};
     const data = {...idObj,...location};
-    console.log(data);
     return this.http.post(BASE_URL + 'api/locations/add', data);
   }
 
