@@ -9,4 +9,4 @@ The frontend is done in Angular.
 
 ## UPDATE
 
-The app is deployed and can be visited by clicking the following link: 
+The app is not working at the moment due to a Heroku issue which I don't have the time to solve right now.
